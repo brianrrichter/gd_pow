@@ -1,0 +1,161 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://img_pow_particles.png" type="Texture" id=1]
+[ext_resource path="res://Pow.gd" type="Script" id=2]
+[ext_resource path="res://shader_white.gdshader" type="Shader" id=3]
+[ext_resource path="res://img_pow.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 31.6894
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.503876, 1 )
+colors = PoolColorArray( 0.96875, 0.925705, 0.575195, 1, 1, 0.927747, 0, 1, 0.189993, 0.191406, 0.0104675, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 0.581818 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 1
+emission_sphere_radius = 23.82
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 25.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 200.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.5
+scale_random = 0.5
+scale_curve = SubResource( 10 )
+color_ramp = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 3 )
+shader_param/active = false
+
+[sub_resource type="Animation" id=6]
+resource_name = "blink1"
+tracks/0/type = "value"
+tracks/0/path = NodePath("icon:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "blink2"
+tracks/0/type = "value"
+tracks/0/path = NodePath("icon:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "blink3"
+tracks/0/type = "value"
+tracks/0/path = NodePath("icon:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Appear"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("icon:modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("icon:modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("icon:modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("icon:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+
+[node name="Pow" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="Particles2D" type="Particles2D" parent="Particles"]
+amount = 5
+local_coords = false
+process_material = SubResource( 4 )
+texture = ExtResource( 1 )
+
+[node name="icon" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+material = SubResource( 5 )
+texture = ExtResource( 4 )
+
+[node name="LifeSpanTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/blink1 = SubResource( 6 )
+anims/blink2 = SubResource( 7 )
+anims/blink3 = SubResource( 8 )
+
+[node name="AnimationPlayerInit" type="AnimationPlayer" parent="."]
+anims/Appear = SubResource( 11 )

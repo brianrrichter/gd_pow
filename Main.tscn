@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://img_cast_origin.png" type="Texture" id=2]
+[ext_resource path="res://Bar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://img_won.png" type="Texture" id=4]
+[ext_resource path="res://img_lose.png" type="Texture" id=5]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="CastOrigin" type="Sprite" parent="."]
+self_modulate = Color( 0.121569, 0.988235, 0.0235294, 1 )
+position = Vector2( 240, 622.624 )
+rotation = 0.785398
+scale = Vector2( 0.316, 0.316 )
+texture = ExtResource( 2 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="endGameLabel" type="Label" parent="Control"]
+visible = false
+margin_left = 179.29
+margin_top = 510.214
+margin_right = 298.29
+margin_bottom = 524.214
+text = "Press 'R' to Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EquilibriumBar" parent="Control" instance=ExtResource( 3 )]
+margin_left = 43.0915
+margin_top = 677.469
+margin_right = 83.0915
+margin_bottom = 717.469
+
+[node name="img_lose" type="Sprite" parent="."]
+visible = false
+position = Vector2( 252.161, 291.112 )
+texture = ExtResource( 5 )
+
+[node name="img_won" type="Sprite" parent="."]
+visible = false
+position = Vector2( 233.262, 316.311 )
+texture = ExtResource( 4 )
